@@ -44,14 +44,14 @@
       animation: popBounce 0.35s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
     }
     .option-btn {
-      transition: all 0.22s cubic-bezier(0.4, 0, 0.2, 1);
+      transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
     }
     .option-btn:hover:not(:disabled) {
-      transform: translateY(-2px) scale(1.008);
-      box-shadow: 0 10px 20px -5px rgba(168, 85, 247, 0.22);
+      transform: translateY(-3px) scale(1.01);
+      box-shadow: 0 8px 20px -4px rgba(236, 72, 153, 0.25);
     }
     .option-btn:active:not(:disabled) {
-      transform: translateY(1px) scale(0.995);
+      transform: translateY(1px) scale(0.99);
     }
     ::-webkit-scrollbar {
       width: 8px;
@@ -80,23 +80,23 @@
   </div>
 
   <!-- Top Header / Bar -->
-  <header class="w-full max-w-4xl mx-auto flex items-center justify-between bg-white/85 backdrop-blur-md px-5 py-3.5 rounded-3xl border border-pink-200/70 cute-shadow mb-4">
+  <header class="w-full max-w-4xl mx-auto flex items-center justify-between bg-white/80 backdrop-blur-md px-5 py-3.5 rounded-3xl border border-pink-200/60 cute-shadow mb-4">
     <div class="flex items-center gap-2 sm:gap-3">
-      <button onclick="goHome()" class="flex items-center gap-1.5 px-3.5 py-1.5 bg-pink-100 hover:bg-pink-200 text-pink-700 rounded-full text-xs sm:text-sm font-extrabold transition-all shadow-sm">
+      <button onclick="goHome()" class="flex items-center gap-1.5 px-3 py-1.5 bg-pink-100 hover:bg-pink-200 text-pink-600 rounded-full text-xs sm:text-sm font-bold transition-all shadow-sm">
         <i data-lucide="home" class="w-4 h-4"></i>
         <span>Trang bìa</span>
       </button>
-      <button onclick="openMenuModal()" class="flex items-center gap-1.5 px-3.5 py-1.5 bg-purple-100 hover:bg-purple-200 text-purple-700 rounded-full text-xs sm:text-sm font-extrabold transition-all shadow-sm">
+      <button onclick="openMenuModal()" class="flex items-center gap-1.5 px-3 py-1.5 bg-purple-100 hover:bg-purple-200 text-purple-600 rounded-full text-xs sm:text-sm font-bold transition-all shadow-sm">
         <i data-lucide="layout-grid" class="w-4 h-4"></i>
         <span id="headerQuestionCounter">Mục lục câu hỏi</span>
       </button>
     </div>
 
     <div class="flex items-center gap-2">
-      <button onclick="toggleSound()" id="soundBtn" class="p-2 rounded-full bg-pink-50 hover:bg-pink-100 text-pink-600 transition shadow-sm border border-pink-200/60" title="Bật/Tắt âm thanh">
+      <button onclick="toggleSound()" id="soundBtn" class="p-2 rounded-full bg-slate-100 hover:bg-pink-100 text-slate-600 hover:text-pink-600 transition shadow-sm" title="Bật/Tắt âm thanh">
         <i data-lucide="volume-2" id="soundIcon" class="w-5 h-5"></i>
       </button>
-      <button onclick="restartQuiz()" class="p-2 rounded-full bg-purple-50 hover:bg-purple-100 text-purple-600 transition shadow-sm border border-purple-200/60" title="Làm lại từ đầu">
+      <button onclick="restartQuiz()" class="p-2 rounded-full bg-slate-100 hover:bg-pink-100 text-slate-600 hover:text-pink-600 transition shadow-sm" title="Làm lại từ đầu">
         <i data-lucide="rotate-ccw" class="w-5 h-5"></i>
       </button>
     </div>
@@ -106,42 +106,42 @@
   <main class="w-full max-w-4xl mx-auto flex-1 flex flex-col justify-center my-auto">
 
     <!-- 1. INTRO VIEW -->
-    <div id="introView" class="bg-white/95 backdrop-blur-lg rounded-[2.5rem] p-6 sm:p-10 border-2 border-pink-200/70 cute-card-shadow text-center animate-pop relative overflow-hidden">
-      <div class="inline-flex items-center gap-2 px-4 py-1.5 bg-pink-50 border border-pink-200 text-pink-600 rounded-full text-xs sm:text-sm font-black mb-4 uppercase tracking-wider">
+    <div id="introView" class="bg-white/90 backdrop-blur-lg rounded-[2.5rem] p-6 sm:p-10 border-2 border-pink-100 cute-card-shadow text-center animate-pop relative overflow-hidden">
+      <div class="inline-flex items-center gap-2 px-4 py-1.5 bg-pink-50 border border-pink-200 text-pink-500 rounded-full text-xs sm:text-sm font-extrabold mb-4 uppercase tracking-wider">
         ✨ BÀI HỌC TRỌNG TÂM ✨
       </div>
-      <h1 class="text-2xl sm:text-4xl md:text-5xl font-black text-transparent bg-clip-text bg-gradient-to-r from-pink-600 via-purple-700 to-indigo-600 leading-tight mb-4">
+      <h1 class="text-2xl sm:text-4xl md:text-5xl font-black text-transparent bg-clip-text bg-gradient-to-r from-pink-500 via-purple-600 to-indigo-500 leading-tight mb-4">
         BÀI 11: NHỮNG VẤN ĐỀ CƠ BẢN VỀ BẢO VỆ AN NINH QUỐC GIA VÀ BẢO ĐẢM TRẬT TỰ AN TOÀN XÃ HỘI
       </h1>
-      <p class="text-slate-600 text-sm sm:text-base font-bold max-w-2xl mx-auto mb-8">
+      <p class="text-slate-500 text-sm sm:text-base font-semibold max-w-2xl mx-auto mb-8">
         Học phần Giáo dục Quốc phòng & An ninh — Trắc nghiệm tương tác 12 câu
       </p>
 
       <div class="grid grid-cols-1 sm:grid-cols-3 gap-4 max-w-2xl mx-auto mb-8 text-left">
-        <div class="p-4 rounded-2xl bg-pink-50/80 border border-pink-200 flex items-start gap-3">
+        <div class="p-4 rounded-2xl bg-pink-50 border border-pink-100 flex items-start gap-3">
           <span class="text-2xl">💖</span>
           <div>
-            <h4 class="font-extrabold text-pink-800 text-sm">Tương tác trực quan</h4>
-            <p class="text-xs text-slate-600 font-semibold mt-0.5">Chọn sai được làm lại ngay, không sợ lộ trước đáp án.</p>
+            <h4 class="font-bold text-pink-700 text-sm">Tương tác trực quan</h4>
+            <p class="text-xs text-slate-500 mt-0.5">Chọn sai được làm lại ngay, không sợ lộ trước đáp án.</p>
           </div>
         </div>
-        <div class="p-4 rounded-2xl bg-purple-50/80 border border-purple-200 flex items-start gap-3">
+        <div class="p-4 rounded-2xl bg-purple-50 border border-purple-100 flex items-start gap-3">
           <span class="text-2xl">✨</span>
           <div>
-            <h4 class="font-extrabold text-purple-800 text-sm">Âm thanh sống động</h4>
-            <p class="text-xs text-slate-600 font-semibold mt-0.5">Hiệu ứng âm thanh sinh động khi trả lời đúng & sai.</p>
+            <h4 class="font-bold text-purple-700 text-sm">Âm thanh sống động</h4>
+            <p class="text-xs text-slate-500 mt-0.5">Hiệu ứng âm thanh sinh động khi trả lời đúng & sai.</p>
           </div>
         </div>
-        <div class="p-4 rounded-2xl bg-amber-50/80 border border-amber-200 flex items-start gap-3">
+        <div class="p-4 rounded-2xl bg-amber-50 border border-amber-100 flex items-start gap-3">
           <span class="text-2xl">🎉</span>
           <div>
-            <h4 class="font-extrabold text-amber-800 text-sm">Khóa kiến thức chuẩn</h4>
-            <p class="text-xs text-slate-600 font-semibold mt-0.5">12 câu bám sát đề cương chi tiết của học phần.</p>
+            <h4 class="font-bold text-amber-700 text-sm">Khóa kiến thức chuẩn</h4>
+            <p class="text-xs text-slate-500 mt-0.5">12 câu bám sát đề cương chi tiết của học phần.</p>
           </div>
         </div>
       </div>
 
-      <button onclick="startQuiz()" class="inline-flex items-center gap-3 px-8 py-4 bg-gradient-to-r from-pink-500 via-rose-400 to-purple-600 hover:from-pink-600 hover:to-purple-700 text-white rounded-full font-black text-lg sm:text-xl shadow-lg shadow-pink-300/60 transform hover:-translate-y-1 transition duration-200 active:scale-95">
+      <button onclick="startQuiz()" class="inline-flex items-center gap-3 px-8 py-4 bg-gradient-to-r from-pink-500 via-rose-400 to-purple-500 hover:from-pink-600 hover:to-purple-600 text-white rounded-full font-black text-lg sm:text-xl shadow-lg shadow-pink-300/60 transform hover:-translate-y-1 transition duration-200 active:scale-95">
         <span>Bắt đầu ôn tập nè!</span>
         <i data-lucide="sparkles" class="w-6 h-6"></i>
       </button>
@@ -151,31 +151,31 @@
     <div id="quizView" class="hidden flex-col gap-4">
       
       <!-- Progress Bar & Indicator -->
-      <div class="bg-white/90 backdrop-blur-md p-4 rounded-2xl border border-pink-200/80 cute-shadow flex flex-col gap-2">
-        <div class="flex justify-between items-center text-xs sm:text-sm font-black">
-          <span id="questionTag" class="text-pink-700 bg-pink-100 px-3.5 py-1 rounded-full flex items-center gap-1.5 border border-pink-200">
+      <div class="bg-white/80 backdrop-blur-md p-4 rounded-2xl border border-pink-200/70 cute-shadow flex flex-col gap-2">
+        <div class="flex justify-between items-center text-xs sm:text-sm font-extrabold">
+          <span id="questionTag" class="text-pink-600 bg-pink-100 px-3 py-1 rounded-full flex items-center gap-1.5">
             <i data-lucide="help-circle" class="w-4 h-4"></i> Câu hỏi 1/12
           </span>
-          <span id="scoreTracker" class="text-purple-700 bg-purple-100 px-3.5 py-1 rounded-full border border-purple-200">
+          <span id="scoreTracker" class="text-purple-600 bg-purple-100 px-3 py-1 rounded-full">
             Đã hoàn thành: 0/12 ⭐
           </span>
         </div>
         <!-- Progress bar line -->
         <div class="w-full bg-pink-100 h-2.5 rounded-full overflow-hidden">
-          <div id="progressBar" class="bg-gradient-to-r from-pink-500 via-purple-500 to-indigo-500 h-full rounded-full transition-all duration-300" style="width: 8.33%;"></div>
+          <div id="progressBar" class="bg-gradient-to-r from-pink-400 to-purple-500 h-full rounded-full transition-all duration-300" style="width: 8.33%;"></div>
         </div>
       </div>
 
       <!-- Question Card -->
-      <div id="cardBox" class="bg-white/95 backdrop-blur-lg rounded-3xl p-5 sm:p-8 border-2 border-purple-200 cute-card-shadow flex flex-col justify-between min-h-[380px] animate-pop">
+      <div id="cardBox" class="bg-white/95 backdrop-blur-lg rounded-3xl p-5 sm:p-8 border-2 border-pink-200/80 cute-card-shadow flex flex-col justify-between min-h-[360px] animate-pop">
         
         <div>
           <!-- Question Title -->
-          <div class="flex items-start gap-3.5 mb-6">
-            <span class="flex-shrink-0 w-8 h-8 rounded-full bg-gradient-to-tr from-pink-500 to-purple-600 text-white flex items-center justify-center font-black text-sm shadow-md mt-0.5">
+          <div class="flex items-start gap-3 mb-6">
+            <span class="flex-shrink-0 w-8 h-8 rounded-full bg-pink-500 text-white flex items-center justify-center font-black text-sm shadow-md mt-0.5">
               ?
             </span>
-            <h2 id="questionText" class="text-base sm:text-xl md:text-2xl font-black text-indigo-950 leading-snug">
+            <h2 id="questionText" class="text-base sm:text-xl md:text-2xl font-extrabold text-slate-800 leading-snug">
               Nội dung câu hỏi sẽ hiển thị tại đây...
             </h2>
           </div>
@@ -187,12 +187,12 @@
         </div>
 
         <!-- Feedback Alert Banner -->
-        <div id="feedbackBanner" class="hidden rounded-2xl p-3.5 mt-2 flex items-center justify-between transition-all duration-300 border">
+        <div id="feedbackBanner" class="hidden rounded-2xl p-3.5 mt-2 flex items-center justify-between transition-all duration-300">
           <div class="flex items-center gap-2.5">
             <span id="feedbackIcon" class="text-xl"></span>
-            <p id="feedbackText" class="text-xs sm:text-sm font-extrabold"></p>
+            <p id="feedbackText" class="text-xs sm:text-sm font-bold"></p>
           </div>
-          <button id="nextBtn" onclick="nextQuestion()" class="hidden items-center gap-1.5 px-4 py-2 bg-gradient-to-r from-emerald-500 to-teal-600 text-white font-black text-xs sm:text-sm rounded-full shadow-md hover:from-emerald-600 hover:to-teal-700 transition transform hover:-translate-y-0.5">
+          <button id="nextBtn" onclick="nextQuestion()" class="hidden items-center gap-1.5 px-4 py-2 bg-gradient-to-r from-emerald-400 to-teal-500 text-white font-black text-xs sm:text-sm rounded-full shadow-md hover:from-emerald-500 hover:to-teal-600 transition transform hover:-translate-y-0.5">
             <span>Tiếp theo</span>
             <i data-lucide="arrow-right" class="w-4 h-4"></i>
           </button>
@@ -202,12 +202,12 @@
 
       <!-- Navigation Arrows -->
       <div class="flex justify-between items-center px-2 pt-1">
-        <button onclick="prevQuestion()" id="prevNavBtn" class="flex items-center gap-2 px-4 py-2 bg-white hover:bg-pink-50 text-slate-700 font-extrabold text-xs sm:text-sm rounded-full border border-pink-200 shadow-sm transition disabled:opacity-40 disabled:cursor-not-allowed">
+        <button onclick="prevQuestion()" id="prevNavBtn" class="flex items-center gap-2 px-4 py-2 bg-white/80 hover:bg-white text-slate-600 font-bold text-xs sm:text-sm rounded-full border border-pink-200 shadow-sm transition disabled:opacity-40 disabled:cursor-not-allowed">
           <i data-lucide="chevron-left" class="w-4 h-4"></i>
           <span>Câu trước</span>
         </button>
-        <span class="text-xs font-bold text-slate-500 hidden sm:inline-block">Dùng phím A, B, C, D hoặc 1, 2, 3, 4 để chọn nhanh</span>
-        <button onclick="nextQuestion()" id="nextNavBtn" class="flex items-center gap-2 px-4 py-2 bg-white hover:bg-pink-50 text-slate-700 font-extrabold text-xs sm:text-sm rounded-full border border-pink-200 shadow-sm transition disabled:opacity-40 disabled:cursor-not-allowed">
+        <span class="text-xs font-semibold text-slate-400 hidden sm:inline-block">Dùng phím A, B, C, D hoặc 1, 2, 3, 4 để chọn nhanh</span>
+        <button onclick="nextQuestion()" id="nextNavBtn" class="flex items-center gap-2 px-4 py-2 bg-white/80 hover:bg-white text-slate-600 font-bold text-xs sm:text-sm rounded-full border border-pink-200 shadow-sm transition disabled:opacity-40 disabled:cursor-not-allowed">
           <span>Câu sau</span>
           <i data-lucide="chevron-right" class="w-4 h-4"></i>
         </button>
@@ -221,21 +221,21 @@
         👑
       </div>
       <h2 class="text-2xl sm:text-4xl font-black text-pink-600 mb-2">XUẤT SẮC QUÁ ĐI MẤT!</h2>
-      <p class="text-slate-600 text-sm sm:text-base font-bold mb-6">Bạn đã vượt qua và làm đúng toàn bộ 12 câu hỏi trắc nghiệm của Bài 11!</p>
+      <p class="text-slate-500 text-sm sm:text-base font-semibold mb-6">Bạn đã vượt qua và làm đúng toàn bộ 12 câu hỏi trắc nghiệm của Bài 11!</p>
 
-      <div class="bg-pink-50/80 border border-pink-200 rounded-3xl p-6 max-w-md mx-auto mb-8">
-        <div class="text-4xl sm:text-5xl font-black text-transparent bg-clip-text bg-gradient-to-r from-pink-500 via-purple-600 to-indigo-600 mb-2">
+      <div class="bg-pink-50/70 border border-pink-200 rounded-3xl p-6 max-w-md mx-auto mb-8">
+        <div class="text-4xl sm:text-5xl font-black text-transparent bg-clip-text bg-gradient-to-r from-pink-500 to-purple-600 mb-2">
           12 / 12
         </div>
-        <p class="text-xs sm:text-sm text-pink-800 font-extrabold">Hoàn thành 100% mục tiêu kiến thức bài học</p>
+        <p class="text-xs sm:text-sm text-pink-700 font-bold">Hoàn thành 100% mục tiêu kiến thức bài học</p>
       </div>
 
       <div class="flex flex-wrap items-center justify-center gap-4">
-        <button onclick="restartQuiz()" class="flex items-center gap-2 px-6 py-3.5 bg-gradient-to-r from-pink-500 to-rose-400 hover:from-pink-600 hover:to-rose-500 text-white rounded-full font-black text-sm sm:text-base shadow-md transition transform hover:-translate-y-0.5">
+        <button onclick="restartQuiz()" class="flex items-center gap-2 px-6 py-3.5 bg-gradient-to-r from-pink-500 to-rose-400 hover:from-pink-600 hover:to-rose-500 text-white rounded-full font-bold text-sm sm:text-base shadow-md transition transform hover:-translate-y-0.5">
           <i data-lucide="rotate-ccw" class="w-5 h-5"></i>
           <span>Làm lại lần nữa nha</span>
         </button>
-        <button onclick="goHome()" class="flex items-center gap-2 px-6 py-3.5 bg-white hover:bg-slate-50 text-slate-700 border border-pink-200 rounded-full font-black text-sm sm:text-base shadow-sm transition">
+        <button onclick="goHome()" class="flex items-center gap-2 px-6 py-3.5 bg-white hover:bg-slate-50 text-slate-700 border border-pink-200 rounded-full font-bold text-sm sm:text-base shadow-sm transition">
           <i data-lucide="home" class="w-5 h-5"></i>
           <span>Quay về trang bìa</span>
         </button>
@@ -246,9 +246,9 @@
 
   <!-- Question List Modal (Mục lục nhảy câu) -->
   <div id="menuModal" class="fixed inset-0 bg-slate-900/40 backdrop-blur-sm z-50 hidden flex items-center justify-center p-4">
-    <div class="bg-white rounded-3xl max-w-lg w-full p-6 border-2 border-purple-200 cute-card-shadow animate-pop relative">
+    <div class="bg-white rounded-3xl max-w-lg w-full p-6 border-2 border-pink-200 cute-card-shadow animate-pop relative">
       <div class="flex items-center justify-between pb-4 border-b border-pink-100 mb-4">
-        <h3 class="text-lg font-black text-purple-800 flex items-center gap-2">
+        <h3 class="text-lg font-black text-pink-600 flex items-center gap-2">
           <i data-lucide="grid" class="w-5 h-5"></i> Danh sách 12 câu hỏi
         </h3>
         <button onclick="closeMenuModal()" class="p-1.5 rounded-full hover:bg-slate-100 text-slate-400 hover:text-slate-600">
@@ -260,25 +260,25 @@
         <!-- Render 1 to 12 buttons -->
       </div>
 
-      <div class="flex items-center justify-between text-xs text-slate-600 font-extrabold px-1">
+      <div class="flex items-center justify-between text-xs text-slate-500 font-semibold px-1">
         <div class="flex items-center gap-1.5">
-          <span class="w-3.5 h-3.5 rounded-full bg-emerald-500 inline-block"></span> Đã hoàn thành
+          <span class="w-3 h-3 rounded-full bg-emerald-400 inline-block"></span> Đã hoàn thành
         </div>
         <div class="flex items-center gap-1.5">
-          <span class="w-3.5 h-3.5 rounded-full bg-purple-100 border border-purple-300 inline-block"></span> Chưa trả lời
+          <span class="w-3 h-3 rounded-full bg-pink-100 border border-pink-300 inline-block"></span> Chưa trả lời
         </div>
       </div>
     </div>
   </div>
 
   <!-- Footer -->
-  <footer class="w-full max-w-4xl mx-auto text-center mt-4 text-[11px] sm:text-xs text-slate-400 font-bold">
+  <footer class="w-full max-w-4xl mx-auto text-center mt-4 text-[11px] sm:text-xs text-slate-400 font-semibold">
     Giáo dục Quốc phòng & An ninh • Tương tác trực tuyến Bài 11
   </footer>
 
   <script>
     // ==========================================
-    // 1. DỮ LIỆU CÂU HỎI (CHUẨN XÁC THEO YÊU CẦU CÂU 5: C, CÂU 8: C)
+    // 1. DỮ LIỆU CÂU HỎI (ĐÃ ĐIỀU CHỈNH CHUẨN XÁC)
     // ==========================================
     const quizData = [
       {
@@ -417,10 +417,10 @@
 
     // State Variables
     let currentIndex = 0;
-    let answeredStatus = new Array(quizData.length).fill(false);
+    let answeredStatus = new Array(quizData.length).fill(false); // Lưu trạng thái hoàn thành từng câu
     let soundEnabled = true;
 
-    // Web Audio Synthesizer
+    // Web Audio Synthesizer (Không cần link âm thanh ngoài, chạy 100% mượt trên mọi trình duyệt)
     let audioCtx = null;
     function getAudioContext() {
       if (!audioCtx) {
@@ -443,15 +443,17 @@
         gain.connect(ctx.destination);
 
         if (type === 'correct') {
+          // Âm thanh chúc mừng ngọt ngào (Chuông Ding-Dong cao vút)
           osc.type = 'triangle';
-          osc.frequency.setValueAtTime(523.25, now);
-          osc.frequency.exponentialRampToValueAtTime(783.99, now + 0.12);
-          osc.frequency.exponentialRampToValueAtTime(1046.50, now + 0.25);
+          osc.frequency.setValueAtTime(523.25, now); // C5
+          osc.frequency.exponentialRampToValueAtTime(783.99, now + 0.12); // G5
+          osc.frequency.exponentialRampToValueAtTime(1046.50, now + 0.25); // C6
           gain.gain.setValueAtTime(0.2, now);
           gain.gain.exponentialRampToValueAtTime(0.001, now + 0.6);
           osc.start(now);
           osc.stop(now + 0.6);
         } else if (type === 'wrong') {
+          // Âm thanh thông báo nhẹ nhàng (Boing dễ thương, không chói tai)
           osc.type = 'sine';
           osc.frequency.setValueAtTime(320, now);
           osc.frequency.exponentialRampToValueAtTime(180, now + 0.22);
@@ -525,7 +527,7 @@
       // Card animation refresh
       const card = document.getElementById('cardBox');
       card.classList.remove('animate-wiggle', 'animate-pop');
-      void card.offsetWidth;
+      void card.offsetWidth; // trigger reflow
       card.classList.add('animate-pop');
 
       // Render Options
@@ -533,31 +535,35 @@
       grid.innerHTML = '';
 
       const letters = ['A', 'B', 'C', 'D'];
+      const bgColors = [
+        'hover:border-pink-300 hover:bg-pink-50/70',
+        'hover:border-purple-300 hover:bg-purple-50/70',
+        'hover:border-amber-300 hover:bg-amber-50/70',
+        'hover:border-rose-300 hover:bg-rose-50/70'
+      ];
 
       data.options.forEach((optText, i) => {
         const btn = document.createElement('button');
         btn.id = `optBtn_${i}`;
         btn.onclick = () => handleSelectOption(i);
-
-        // NỀN & MÀU CHỮ PASTEL DỊU MẮT, TƯƠNG PHẢN CAO KHÔNG LO CHÓI
-        btn.className = `option-btn w-full text-left p-3.5 sm:p-4 rounded-2xl border-2 border-purple-200/90 bg-[#fbf7ff] hover:bg-[#f3e8ff] hover:border-purple-300 font-extrabold text-sm sm:text-base text-indigo-950 flex items-center justify-between shadow-sm`;
+        btn.className = `option-btn w-full text-left p-3.5 sm:p-4 rounded-2xl border-2 border-slate-200/80 bg-white font-bold text-xs sm:text-sm text-slate-700 flex items-center justify-between ${bgColors[i % 4]} shadow-sm`;
 
         // Check if already answered correctly previously
         if (answeredStatus[currentIndex] && i === data.correct) {
-          btn.className = `option-btn w-full text-left p-3.5 sm:p-4 rounded-2xl border-2 border-emerald-400 bg-emerald-50 text-emerald-900 font-extrabold text-sm sm:text-base flex items-center justify-between shadow-sm`;
+          btn.className = `option-btn w-full text-left p-3.5 sm:p-4 rounded-2xl border-2 border-emerald-400 bg-emerald-50 text-emerald-800 font-bold text-xs sm:text-sm flex items-center justify-between shadow-sm`;
           btn.innerHTML = `
             <div class="flex items-center gap-3">
-              <span class="w-8 h-8 rounded-xl bg-emerald-500 text-white flex items-center justify-center font-black text-sm shadow">${letters[i]}</span>
-              <span class="leading-snug">${optText.replace(/^[A-D]\.\s*/, '')}</span>
+              <span class="w-7 h-7 rounded-xl bg-emerald-500 text-white flex items-center justify-center font-black text-xs">${letters[i]}</span>
+              <span>${optText.replace(/^[A-D]\.\s*/, '')}</span>
             </div>
-            <span class="text-emerald-700 font-black text-sm sm:text-base flex items-center gap-1">✔ Đúng</span>
+            <span class="text-emerald-600 font-black text-sm flex items-center gap-1">✔ Đúng</span>
           `;
           btn.disabled = true;
         } else {
           btn.innerHTML = `
             <div class="flex items-center gap-3">
-              <span class="w-8 h-8 rounded-xl bg-gradient-to-tr from-purple-500 to-pink-500 text-white flex items-center justify-center font-black text-sm shadow-sm">${letters[i]}</span>
-              <span class="leading-snug">${optText.replace(/^[A-D]\.\s*/, '')}</span>
+              <span class="w-7 h-7 rounded-xl bg-pink-100 text-pink-600 border border-pink-200 flex items-center justify-center font-black text-xs">${letters[i]}</span>
+              <span>${optText.replace(/^[A-D]\.\s*/, '')}</span>
             </div>
             <span class="status-indicator"></span>
           `;
@@ -585,17 +591,17 @@
         answeredStatus[currentIndex] = true;
         playSound('correct');
 
-        // Confetti
+        // Bắn pháo hoa rực rỡ confetti
         confetti({
-          particleCount: 65,
-          spread: 75,
+          particleCount: 60,
+          spread: 70,
           origin: { y: 0.7 },
-          colors: ['#f472b6', '#a855f7', '#fbbf24', '#34d399', '#f87171']
+          colors: ['#f472b6', '#c084fc', '#fbbf24', '#34d399', '#f87171']
         });
 
-        // Đổi màu nút được chọn thành xanh ngọc pastel đậm nét
-        selectedBtn.className = "option-btn w-full text-left p-3.5 sm:p-4 rounded-2xl border-2 border-emerald-400 bg-emerald-50 text-emerald-900 font-extrabold text-sm sm:text-base flex items-center justify-between shadow-sm";
-        selectedBtn.querySelector('.status-indicator').innerHTML = `<span class="text-emerald-700 font-black text-sm sm:text-base flex items-center gap-1">✔ Chính xác</span>`;
+        // Đổi màu nút được chọn thành xanh lá tươi tắn
+        selectedBtn.className = "option-btn w-full text-left p-3.5 sm:p-4 rounded-2xl border-2 border-emerald-400 bg-emerald-50 text-emerald-800 font-bold text-xs sm:text-sm flex items-center justify-between shadow-sm";
+        selectedBtn.querySelector('.status-indicator').innerHTML = `<span class="text-emerald-600 font-black text-sm flex items-center gap-1">✔ Chính xác</span>`;
 
         // Khóa các nút khác
         data.options.forEach((_, i) => {
@@ -614,16 +620,16 @@
         void card.offsetWidth;
         card.classList.add('animate-wiggle');
 
-        // Nút sai đổi sang sắc hồng dâu nhẹ dịu mắt, làm mờ nhẹ và khóa riêng nút đó
-        selectedBtn.className = "option-btn w-full text-left p-3.5 sm:p-4 rounded-2xl border-2 border-rose-200 bg-rose-50/90 text-rose-800 font-extrabold text-sm sm:text-base flex items-center justify-between opacity-75 cursor-not-allowed";
-        selectedBtn.querySelector('.status-indicator').innerHTML = `<span class="text-rose-600 font-black text-xs sm:text-sm">✖ Thử lại nha</span>`;
+        // Đổi màu nút sai sang màu đỏ/hồng nhạt và khóa riêng nút này lại
+        selectedBtn.className = "option-btn w-full text-left p-3.5 sm:p-4 rounded-2xl border-2 border-rose-300 bg-rose-50 text-rose-500 font-bold text-xs sm:text-sm flex items-center justify-between opacity-70 cursor-not-allowed";
+        selectedBtn.querySelector('.status-indicator').innerHTML = `<span class="text-rose-500 font-extrabold text-xs">✖ Thử lại nha</span>`;
         selectedBtn.disabled = true;
 
-        // Banner thông báo nhẹ nhàng
+        // Hiện banner gợi ý nhẹ nhàng
         const banner = document.getElementById('feedbackBanner');
-        banner.className = "rounded-2xl p-3.5 mt-2 flex items-center justify-between bg-rose-50 border border-rose-200 text-rose-800";
+        banner.className = "rounded-2xl p-3.5 mt-2 flex items-center justify-between bg-rose-50 border border-rose-200 text-rose-600";
         document.getElementById('feedbackIcon').textContent = "🌸";
-        document.getElementById('feedbackText').textContent = "Chưa đúng rồi nè! Bạn hãy thử chọn lại một phương án khác nhé.";
+        document.getElementById('feedbackText').textContent = "Chưa đúng rồi nè! Bạn hãy suy nghĩ và chọn lại phương án khác nhé.";
         banner.classList.remove('hidden');
       }
 
@@ -634,9 +640,9 @@
 
     function showSuccessBanner(showNextBtn) {
       const banner = document.getElementById('feedbackBanner');
-      banner.className = "rounded-2xl p-3.5 mt-2 flex items-center justify-between bg-emerald-50 border border-emerald-300 text-emerald-900 animate-pop";
+      banner.className = "rounded-2xl p-3.5 mt-2 flex items-center justify-between bg-emerald-50 border border-emerald-200 text-emerald-700 animate-pop";
       document.getElementById('feedbackIcon').textContent = "🎉";
-      document.getElementById('feedbackText').textContent = "Chính xác 100%! Bạn trả lời xuất sắc lắm!";
+      document.getElementById('feedbackText').textContent = "Chính xác 100%! Bạn đỉnh quá đi!";
       
       const nextBtn = document.getElementById('nextBtn');
       nextBtn.classList.remove('hidden');
@@ -651,10 +657,12 @@
       if (currentIndex < quizData.length - 1) {
         loadQuestion(currentIndex + 1);
       } else {
+        // Kiểm tra xem đã làm hết 12 câu chưa
         const allDone = answeredStatus.every(Boolean);
         if (allDone) {
           showFinalResult();
         } else {
+          // Chuyển sang câu chưa làm đầu tiên
           const nextUnfinished = answeredStatus.findIndex(status => !status);
           if (nextUnfinished !== -1) {
             loadQuestion(nextUnfinished);
@@ -676,6 +684,7 @@
       document.getElementById('quizView').classList.add('hidden');
       document.getElementById('resultView').classList.remove('hidden');
 
+      // Hiệu ứng pháo hoa hoành tráng kết thúc
       const end = Date.now() + 2 * 1000;
       const interval = setInterval(function() {
         if (Date.now() > end) {
@@ -707,11 +716,11 @@
 
         let styleClass = "w-full py-3 rounded-2xl font-black text-sm flex flex-col items-center justify-center transition shadow-sm ";
         if (isCurrent) {
-          styleClass += "bg-gradient-to-tr from-pink-500 to-purple-600 text-white ring-4 ring-pink-200";
+          styleClass += "bg-pink-500 text-white ring-4 ring-pink-200";
         } else if (isDone) {
-          styleClass += "bg-emerald-100 text-emerald-800 border border-emerald-300";
+          styleClass += "bg-emerald-100 text-emerald-700 border border-emerald-300";
         } else {
-          styleClass += "bg-purple-50 text-indigo-950 hover:bg-purple-100 border border-purple-100";
+          styleClass += "bg-slate-100 text-slate-600 hover:bg-pink-100 hover:text-pink-600";
         }
 
         btn.className = styleClass;
@@ -726,7 +735,7 @@
       document.getElementById('menuModal').classList.add('hidden');
     }
 
-    // Bắt phím tắt bàn phím
+    // Bắt phím tắt bàn phím tiện lợi khi thuyết trình
     window.addEventListener('keydown', (e) => {
       const key = e.key.toUpperCase();
       if (document.getElementById('quizView').classList.contains('flex')) {
@@ -739,6 +748,7 @@
       }
     });
 
+    // Khởi tạo icon Lucide ban đầu
     document.addEventListener("DOMContentLoaded", () => {
       lucide.createIcons();
     });
