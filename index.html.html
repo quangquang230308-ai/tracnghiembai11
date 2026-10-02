@@ -1,0 +1,684 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Trắc Nghiệm Bài 11: An Ninh Quốc Gia & Trật Tự An Toàn Xã Hội</title>
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <!-- Google Fonts: Nunito & Quicksand -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800;900&family=Quicksand:wght@500;600;700&display=swap" rel="stylesheet">
+  <!-- Lucide Icons -->
+  <script src="https://unpkg.com/lucide@latest"></script>
+  <!-- Canvas Confetti -->
+  <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.9.3/dist/confetti.browser.min.js"></script>
+
+  <style>
+    body {
+      font-family: 'Nunito', 'Quicksand', sans-serif;
+      user-select: none;
+      -webkit-user-select: none;
+    }
+    
+    @keyframes cute-shake {
+      0%, 100% { transform: translateX(0); }
+      20% { transform: translateX(-7px) rotate(-1deg); }
+      40% { transform: translateX(7px) rotate(1deg); }
+      60% { transform: translateX(-5px) rotate(-0.5deg); }
+      80% { transform: translateX(5px) rotate(0.5deg); }
+    }
+    .shake-anim {
+      animation: cute-shake 0.4s ease-in-out;
+    }
+
+    @keyframes soft-float {
+      0%, 100% { transform: translateY(0px); }
+      50% { transform: translateY(-7px); }
+    }
+    .float-item {
+      animation: soft-float 3.5s ease-in-out infinite;
+    }
+
+    ::-webkit-scrollbar {
+      width: 7px;
+    }
+    ::-webkit-scrollbar-track {
+      background: #fdf2f8;
+      border-radius: 9999px;
+    }
+    ::-webkit-scrollbar-thumb {
+      background: #f472b6;
+      border-radius: 9999px;
+    }
+  </style>
+</head>
+
+<body class="min-h-screen bg-gradient-to-br from-pink-100 via-purple-100 to-indigo-100 text-indigo-950 flex flex-col justify-between p-3 md:p-6 overflow-x-hidden relative">
+
+  <!-- Họa tiết trang trí nền pastel -->
+  <div class="fixed inset-0 pointer-events-none overflow-hidden -z-10 opacity-70">
+    <div class="absolute -top-10 -left-10 w-72 h-72 rounded-full bg-pink-200/50 blur-3xl"></div>
+    <div class="absolute top-1/3 -right-20 w-96 h-96 rounded-full bg-purple-200/60 blur-3xl"></div>
+    <div class="absolute -bottom-16 left-1/4 w-80 h-80 rounded-full bg-sky-200/50 blur-3xl"></div>
+    <span class="absolute top-12 left-10 text-3xl opacity-40 float-item">🌸</span>
+    <span class="absolute top-24 right-16 text-3xl opacity-40 float-item" style="animation-delay: 1s;">✨</span>
+    <span class="absolute bottom-20 left-12 text-3xl opacity-40 float-item" style="animation-delay: 1.5s;">🧸</span>
+    <span class="absolute bottom-16 right-20 text-3xl opacity-40 float-item" style="animation-delay: 2s;">💖</span>
+  </div>
+
+  <!-- HEADER THANH ĐIỀU HƯỚNG TRÊN CÙNG -->
+  <header class="w-full max-w-5xl mx-auto flex items-center justify-between bg-white/85 backdrop-blur-md px-4 py-3 rounded-3xl shadow-sm border border-pink-200/80 mb-4 transition-all">
+    <div class="flex items-center gap-2">
+      <button onclick="goToSlide(0)" class="flex items-center gap-2 px-3.5 py-1.5 rounded-2xl bg-pink-50 hover:bg-pink-100 text-pink-700 font-bold transition active:scale-95 text-sm md:text-base border border-pink-200">
+        <i data-lucide="home" class="w-4 h-4"></i>
+        <span>Trang bìa</span>
+      </button>
+
+      <button onclick="toggleGridModal(true)" class="flex items-center gap-2 px-3.5 py-1.5 rounded-2xl bg-purple-50 hover:bg-purple-100 text-purple-700 font-bold transition active:scale-95 text-sm md:text-base border border-purple-200">
+        <i data-lucide="layout-grid" class="w-4 h-4"></i>
+        <span class="hidden sm:inline">Mục lục câu hỏi</span>
+        <span class="sm:hidden">12 câu</span>
+      </button>
+    </div>
+
+    <!-- Tiến độ câu hỏi -->
+    <div id="progressIndicator" class="hidden items-center gap-3">
+      <div class="text-right">
+        <span class="text-xs font-bold text-indigo-400 block uppercase tracking-wider">Tiến độ</span>
+        <span id="progressText" class="text-sm md:text-base font-extrabold text-purple-800">Câu 1/12</span>
+      </div>
+      <div class="w-20 md:w-32 h-3 bg-purple-100 rounded-full overflow-hidden p-0.5 border border-purple-200">
+        <div id="progressBar" class="h-full bg-gradient-to-r from-pink-400 to-purple-500 rounded-full transition-all duration-300 w-[8%]"></div>
+      </div>
+    </div>
+
+    <div class="flex items-center gap-2">
+      <button id="soundToggleBtn" onclick="toggleSound()" title="Bật/Tắt âm thanh" class="w-10 h-10 rounded-2xl bg-indigo-50 hover:bg-indigo-100 text-indigo-700 flex items-center justify-center transition active:scale-95 border border-indigo-200">
+        <i id="soundIcon" data-lucide="volume-2" class="w-5 h-5"></i>
+      </button>
+      <button onclick="resetAllQuiz()" title="Làm lại tất cả" class="w-10 h-10 rounded-2xl bg-amber-50 hover:bg-amber-100 text-amber-700 flex items-center justify-center transition active:scale-95 border border-amber-200">
+        <i data-lucide="rotate-ccw" class="w-5 h-5"></i>
+      </button>
+    </div>
+  </header>
+
+  <!-- NỘI DUNG CHÍNH -->
+  <main class="w-full max-w-5xl mx-auto flex-1 flex flex-col justify-center items-center relative min-h-[500px]">
+
+    <!-- ==================== SLIDE 0: TRANG BÌA (ĐÃ BỎ ĐOẠN MÔ TẢ & 3 Ô) ==================== -->
+    <div id="slide-0" class="w-full flex flex-col items-center justify-center text-center p-8 md:p-14 bg-white/90 backdrop-blur-md rounded-3xl shadow-xl border border-pink-200">
+      
+      <div class="inline-flex items-center gap-2 px-5 py-2 rounded-full bg-pink-100 text-pink-700 font-extrabold text-sm md:text-base mb-6 border border-pink-200">
+        <span>✨ BÀI HỌC TRỌNG TÂM ✨</span>
+      </div>
+
+      <h1 class="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-black text-transparent bg-clip-text bg-gradient-to-r from-purple-700 via-pink-600 to-indigo-700 tracking-tight leading-snug max-w-3xl mb-5">
+        BÀI 11: NHỮNG VẤN ĐỀ CƠ BẢN VỀ BẢO VỆ AN NINH QUỐC GIA VÀ BẢO ĐẢM TRẬT TỰ AN TOÀN XÃ HỘI
+      </h1>
+
+      <p class="text-base sm:text-lg md:text-xl font-bold text-purple-800 mb-10 max-w-2xl">
+        Học phần Giáo dục Quốc phòng & An ninh — Trắc nghiệm tương tác 12 câu
+      </p>
+
+      <button onclick="goToSlide(1)" class="group relative inline-flex items-center gap-3 px-10 py-5 rounded-full bg-gradient-to-r from-pink-500 via-purple-500 to-indigo-500 text-white font-black text-xl md:text-2xl shadow-lg hover:shadow-2xl hover:scale-105 active:scale-95 transition-all duration-300">
+        <span>Bắt đầu ôn tập nè!</span>
+        <i data-lucide="sparkles" class="w-6 h-6"></i>
+      </button>
+    </div>
+
+    <!-- ==================== SLIDE CÂU HỎI TRẮC NGHIỆM ==================== -->
+    <div id="quizSlideContainer" class="w-full hidden"></div>
+
+  </main>
+
+  <!-- FOOTER ĐIỀU HƯỚNG DƯỚI ĐÁY -->
+  <footer id="bottomBar" class="w-full max-w-5xl mx-auto flex items-center justify-between bg-white/85 backdrop-blur-md px-4 py-3 rounded-3xl shadow-sm border border-pink-200/80 mt-4 transition-all hidden">
+    <button id="btnPrev" onclick="prevQuestion()" class="flex items-center gap-2 px-5 py-2.5 rounded-2xl bg-indigo-50 hover:bg-indigo-100 text-indigo-700 font-bold text-sm md:text-base border border-indigo-200 transition active:scale-95">
+      <i data-lucide="chevron-left" class="w-5 h-5"></i>
+      <span>Câu trước</span>
+    </button>
+
+    <div class="text-xs md:text-sm font-semibold text-purple-600 hidden sm:flex items-center gap-2">
+      <span class="inline-block px-2.5 py-1 rounded-xl bg-purple-100 text-purple-700 font-bold border border-purple-200">Mẹo</span>
+      <span>Cứ bấm thử, nếu sai hãy chọn phương án khác cho tới khi đúng nha! 🌸</span>
+    </div>
+
+    <button id="btnNext" onclick="nextQuestion()" class="flex items-center gap-2 px-6 py-2.5 rounded-2xl bg-gradient-to-r from-pink-500 to-purple-600 text-white font-black text-sm md:text-base shadow-md hover:shadow-lg hover:scale-105 transition active:scale-95">
+      <span id="nextBtnText">Câu tiếp theo</span>
+      <i data-lucide="chevron-right" class="w-5 h-5"></i>
+    </button>
+  </footer>
+
+  <!-- MODAL MỤC LỤC -->
+  <div id="gridModal" class="fixed inset-0 bg-indigo-950/40 backdrop-blur-sm z-50 flex items-center justify-center p-4 hidden">
+    <div class="bg-white rounded-3xl max-w-md w-full p-6 shadow-2xl border-2 border-purple-200 relative transform transition-all duration-200">
+      <button onclick="toggleGridModal(false)" class="absolute top-4 right-4 w-9 h-9 rounded-full bg-pink-100 hover:bg-pink-200 text-pink-700 flex items-center justify-center font-bold">
+        ✕
+      </button>
+
+      <div class="flex items-center gap-3 mb-5">
+        <span class="text-2xl">📋</span>
+        <div>
+          <h3 class="font-extrabold text-lg text-purple-900">Danh Sách Câu Hỏi</h3>
+          <p class="text-xs font-semibold text-purple-600">Chọn câu bất kỳ để làm bài</p>
+        </div>
+      </div>
+
+      <div id="gridButtons" class="grid grid-cols-4 gap-3 mb-5"></div>
+
+      <div class="flex items-center justify-around text-xs font-bold pt-3 border-t border-purple-100 text-indigo-950">
+        <div class="flex items-center gap-1.5">
+          <span class="w-3.5 h-3.5 rounded-lg bg-emerald-400 border border-emerald-500 inline-block"></span>
+          <span>Đã đúng</span>
+        </div>
+        <div class="flex items-center gap-1.5">
+          <span class="w-3.5 h-3.5 rounded-lg bg-rose-200 border border-rose-400 inline-block"></span>
+          <span>Đang thử</span>
+        </div>
+        <div class="flex items-center gap-1.5">
+          <span class="w-3.5 h-3.5 rounded-lg bg-purple-50 border border-purple-200 inline-block"></span>
+          <span>Chưa làm</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- MODAL HOÀN THÀNH -->
+  <div id="congratsModal" class="fixed inset-0 bg-indigo-950/40 backdrop-blur-sm z-50 flex items-center justify-center p-4 hidden">
+    <div class="bg-white rounded-3xl max-w-lg w-full p-8 shadow-2xl border-4 border-pink-200 text-center relative">
+      <div class="text-6xl mb-3">🎉</div>
+      <h2 class="text-3xl font-black text-transparent bg-clip-text bg-gradient-to-r from-pink-600 to-purple-600 mb-2">
+        Tuyệt Vời Quá Đi!
+      </h2>
+      <p class="text-base font-bold text-purple-900 mb-6">
+        Bạn đã giải chính xác toàn bộ 12 câu hỏi trắc nghiệm Bài 11 rồi nè! 🌸
+      </p>
+
+      <div class="flex flex-col sm:flex-row gap-3 justify-center">
+        <button onclick="resetAllQuiz()" class="px-6 py-3 rounded-2xl bg-pink-100 hover:bg-pink-200 text-pink-700 font-extrabold transition">
+          Làm lại từ đầu
+        </button>
+        <button onclick="goToSlide(0); toggleCongratsModal(false)" class="px-6 py-3 rounded-2xl bg-gradient-to-r from-purple-600 to-pink-500 text-white font-extrabold shadow-md hover:scale-105 transition">
+          Về trang bìa
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    const quizData = [
+      {
+        id: 1,
+        question: "Bảo vệ an ninh quốc gia là:",
+        options: [
+          { key: "A", text: "Phòng ngừa, phát hiện, ngăn chặn, đấu tranh làm thất bại các hoạt động xâm hại an ninh quốc gia." },
+          { key: "B", text: "Phòng ngừa, phát hiện, ngăn chặn đấu tranh các hành động gây rối của kẻ thù." },
+          { key: "C", text: "Bảo vệ bí mật Nhà nước và các mục tiêu quan trọng về an ninh quốc gia." },
+          { key: "D", text: "Bảo vệ các công trình, cơ sở chính trị, an ninh, quốc phòng, kinh tế khoa học công nghệ của Nhà nước." }
+        ],
+        correct: "A",
+        explain: "Theo Điều 3 Luật An ninh quốc gia 2004: Bảo vệ an ninh quốc gia là phòng ngừa, phát hiện, ngăn chặn, đấu tranh làm thất bại các hoạt động xâm hại an ninh quốc gia."
+      },
+      {
+        id: 2,
+        question: "Nội dung bảo vệ an ninh quốc gia gồm:",
+        options: [
+          { key: "A", text: "Bảo vệ an ninh: Chính trị nội bộ, kinh tế, văn hoá, tư tưởng, dân tộc, tôn giáo, lãnh thổ, biên giới, thông tin, quốc phòng an ninh và đối ngoại." },
+          { key: "B", text: "Bảo vệ an ninh: Chính trị nội bộ, an ninh kinh tế, Đảng, Nhà nước, nhân dân." },
+          { key: "C", text: "Bảo vệ an ninh: Kinh tế, văn hoá - tư tưởng, dân tộc và sự nghiệp công nghiệp hoá, hiện đại hoá." },
+          { key: "D", text: "Bảo vệ an ninh: Kinh tế, tôn giáo, dân tộc và nền văn hoá tiên tiến đậm đà bản sắc dân tộc." }
+        ],
+        correct: "A",
+        explain: "Nội dung bảo vệ an ninh quốc gia bao gồm: Chính trị nội bộ, kinh tế, văn hoá - tư tưởng, dân tộc, tôn giáo, lãnh thổ, biên giới, thông tin, quốc phòng an ninh và đối ngoại."
+      },
+      {
+        id: 3,
+        question: "Nội dung bảo đảm trật tự an toàn xã hội là:",
+        options: [
+          { key: "A", text: "Bảo vệ an ninh thông tin." },
+          { key: "B", text: "Bảo vệ môi trường." },
+          { key: "C", text: "Bảo vệ nền kinh tế thị trường nhiều thành phần." },
+          { key: "D", text: "Bảo vệ nền văn hoá." }
+        ],
+        correct: "B",
+        explain: "Trong các nội dung bảo đảm trật tự an toàn xã hội có: giữ gìn trật tự nơi công cộng, an toàn giao thông, bài trừ tệ nạn xã hội và bảo vệ môi trường."
+      },
+      {
+        id: 4,
+        question: "Hiện nay Việt Nam khẳng định đối tác là:",
+        options: [
+          { key: "A", text: "Những ai chủ trương tôn trọng độc lập, chủ quyền và hợp tác bình đẳng cùng có lợi với Việt Nam." },
+          { key: "B", text: "Những quốc gia, vùng lãnh thổ, các tổ chức phi Chính phủ tạo điều kiện thuận lợi cho Việt Nam." },
+          { key: "C", text: "Những nước xã hội chủ nghĩa và các nước đang phát triển giúp đỡ Việt Nam." },
+          { key: "D", text: "Những tổ chức, cá nhân tôn trọng giúp đỡ Việt Nam." }
+        ],
+        correct: "A",
+        explain: "Đảng ta khẳng định: Những ai chủ trương tôn trọng độc lập, chủ quyền, thiết lập và mở rộng quan hệ hữu nghị, hợp tác bình đẳng, cùng có lợi với Việt Nam đều là đối tác."
+      },
+      {
+        id: 5,
+        question: "Quan điểm của Đảng về bảo vệ an ninh quốc gia, bảo đảm trật tự, an toàn xã hội là:",
+        options: [
+          { key: "A", text: "Đảng lãnh đạo trực tiếp, tuyệt đối về mọi mặt bảo vệ an ninh quốc gia." },
+          { key: "B", text: "Công an là lực lượng nòng cốt, tăng cường hiệu lực quản lý của Nhà nước." },
+          { key: "C", text: "Kết hợp chặt chẽ nhiệm vụ xây dựng với nhiệm vụ bảo vệ Tổ quốc." },
+          { key: "D", text: "Phát huy quyền làm chủ của nhân dân trên lĩnh vực bảo vệ an ninh quốc gia, bảo đảm trật tự an toàn xã hội." }
+        ],
+        correct: "A",
+        explain: "Quan điểm đầu tiên và cốt lõi: Đảng Cộng sản Việt Nam lãnh đạo trực tiếp, tuyệt đối về mọi mặt sự nghiệp bảo vệ an ninh quốc gia."
+      },
+      {
+        id: 6,
+        question: "Căn cứ Luật an ninh quốc gia năm 2004, quyền và nghĩa vụ của công dân trong bảo vệ an ninh quốc gia là:",
+        options: [
+          { key: "A", text: "Tham gia lực lượng bảo vệ an ninh quốc gia và thực hiện nhiệm vụ bảo vệ an ninh quốc gia theo quy định của pháp luật." },
+          { key: "B", text: "Mọi công dân có nghĩa vụ tích cực tham gia đấu tranh phòng ngừa và chống tội phạm." },
+          { key: "C", text: "Hoạt động bảo vệ an ninh quốc gia có thành tích khen thưởng." },
+          { key: "D", text: "Là sự nghiệp toàn dân, cơ quan tổ chức, công dân trách nhiệm theo pháp luật." }
+        ],
+        correct: "A",
+        explain: "Luật An ninh quốc gia năm 2004 quy định rõ công dân có quyền và nghĩa vụ tham gia lực lượng và thực hiện nhiệm vụ bảo vệ an ninh quốc gia theo quy định pháp luật."
+      },
+      {
+        id: 7,
+        question: "Lực lượng nòng cốt trong sự nghiệp bảo vệ an ninh quốc gia và bảo đảm trật tự, an toàn xã hội là:",
+        options: [
+          { key: "A", text: "Công an." },
+          { key: "B", text: "Các đơn vị sự nghiệp." },
+          { key: "C", text: "Dân quân Tự vệ." },
+          { key: "D", text: "Toàn dân." }
+        ],
+        correct: "A",
+        explain: "Lực lượng Công an nhân dân là lực lượng nòng cốt xung kích, chuyên trách trên mặt trận bảo vệ an ninh quốc gia và giữ gìn trật tự an toàn xã hội."
+      },
+      {
+        id: 8,
+        question: "Để bảo đảm thắng lợi hoàn toàn và triệt để trong cuộc đấu tranh bảo vệ an ninh quốc gia, giữ gìn trật tự, an toàn xã hội, lực lượng công an phải:",
+        options: [
+          { key: "A", text: "Kết hợp sức mạnh của quần chúng với công tác nghiệp vụ của các cơ quan chuyên môn thuộc công an nhân dân" },
+          { key: "B", text: "Kết hợp tai, mắt của quần chúng nhân dân với công tác nghiệp vụ của các cơ quan chuyên môn công an nhân dân" },
+          { key: "C", text: "Kết hợp phong trào toàn dân bảo vệ an ninh Tổ quốc với công tác nghiệp vụ của các cơ quan chuyên môn" },
+          { key: "D", text: "Kết hợp tính tự giác cách mạng của quần chúng với công tác nghiệp vụ của các cơ quan chuyên môn" },
+          { key: "E", text: "Phối hợp công tác bảo vệ an ninh, trật tự, an toàn xã hội với công tác quốc phòng toàn dân" }
+        ],
+        correct: "A",
+        explain: "Phải biết kết hợp sức mạnh vô địch của quần chúng nhân dân với các biện pháp nghiệp vụ tinh nhuệ của các cơ quan chuyên môn Công an."
+      },
+      {
+        id: 9,
+        question: "Mối quan hệ giữa bảo vệ an ninh quốc gia và giữ gìn trật tự, an toàn xã hội là:",
+        options: [
+          { key: "A", text: "An ninh quốc gia hoạt động độc lập, không có liên quan đến công tác giữ gìn trật tự, an toàn xã hội" },
+          { key: "B", text: "Trật tự an toàn xã hội được giữ vững sẽ tạo điều kiện cho an ninh quốc gia càng được củng cố vững chắc" },
+          { key: "C", text: "An ninh quốc gia quyết định trực tiếp và lâu dài đến công tác giữ gìn trật tự an toàn xã hội" },
+          { key: "D", text: "Trật tự an toàn xã hội chi phối trực tiếp cả trước mắt và lâu dài đến công tác bảo vệ an ninh quốc gia" }
+        ],
+        correct: "B",
+        explain: "Trật tự an toàn xã hội được giữ vững sẽ tạo tiền đề xã hội ổn định, môi trường bình yên để củng cố vững chắc an ninh quốc gia."
+      },
+      {
+        id: 10,
+        question: "“Bảo vệ an ninh quốc gia phải kết hợp chặt chẽ với giữ gìn trật tự, an toàn xã hội” là một trong những nội dung của:",
+        options: [
+          { key: "A", text: "Giải pháp bảo vệ an ninh quốc gia, giữ gìn trật tự, an toàn xã hội" },
+          { key: "B", text: "Nhiệm vụ bảo vệ an ninh quốc gia, giữ gìn trật tự, an toàn xã hội" },
+          { key: "C", text: "Quan điểm bảo vệ an ninh quốc gia, giữ gìn trật tự, an toàn xã hội" },
+          { key: "D", text: "Biện pháp bảo vệ an ninh quốc gia, giữ gìn trật tự, an toàn xã hội" }
+        ],
+        correct: "C",
+        explain: "Đây là một trong những Quan điểm chỉ đạo xuyên suốt của Đảng ta trong sự nghiệp bảo vệ an ninh và trật tự an toàn xã hội."
+      },
+      {
+        id: 11,
+        question: "“Đảng lãnh đạo trực tiếp về mọi mặt là nhân tố quyết định thắng lợi của cuộc đấu tranh bảo vệ an ninh quốc gia và giữ gìn trật tự an toàn xã hội” là một trong những nội dung thể hiện:",
+        options: [
+          { key: "A", text: "Quan điểm bảo vệ an ninh quốc gia, giữ gìn trật tự, an toàn xã hội" },
+          { key: "B", text: "Nhiệm vụ bảo vệ an ninh quốc gia, giữ gìn trật tự, an toàn xã hội" },
+          { key: "C", text: "Tính chất bảo vệ an ninh quốc gia, giữ gìn trật tự, an toàn xã hội" },
+          { key: "D", text: "Biện pháp bảo vệ an ninh quốc gia, giữ gìn trật tự, an toàn xã hội" }
+        ],
+        correct: "A",
+        explain: "Khẳng định nhân tố quyết định thắng lợi là sự lãnh đạo trực tiếp về mọi mặt của Đảng, thuộc hệ thống Quan điểm chỉ đạo của Đảng."
+      },
+      {
+        id: 12,
+        question: "Vai trò lãnh đạo của Đảng ta về bảo vệ an ninh quốc gia, trật tự, an toàn xã hội là:",
+        options: [
+          { key: "A", text: "Đảng lãnh đạo trực tiếp, tuyệt đối về mọi mặt" },
+          { key: "B", text: "Đảng đề ra đường lối và giao cho Nhà nước thực hiện" },
+          { key: "C", text: "Đảng trực tiếp chỉ đạo Nhà nước và toàn xã hội thực hiện" },
+          { key: "D", text: "Đảng xác định đường lối, chính sách và chỉ đạo cả nước thực hiện" }
+        ],
+        correct: "A",
+        explain: "Nguyên tắc lãnh đạo cơ bản và bất biến: Đảng lãnh đạo trực tiếp, tuyệt đối về mọi mặt đối với sự nghiệp bảo vệ an ninh quốc gia, trật tự, an toàn xã hội."
+      }
+    ];
+
+    let currentSlide = 0;
+    let soundEnabled = true;
+
+    const userState = quizData.map(() => ({
+      status: 'unattempted',
+      wrongKeys: new Set(),
+      isCorrect: false
+    }));
+
+    let audioCtx = null;
+    function getAudioContext() {
+      if (!audioCtx) audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+      if (audioCtx.state === 'suspended') audioCtx.resume();
+      return audioCtx;
+    }
+
+    function playWrongSound() {
+      if (!soundEnabled) return;
+      try {
+        const ctx = getAudioContext();
+        const osc = ctx.createOscillator();
+        const gain = ctx.createGain();
+        osc.type = 'triangle';
+        osc.frequency.setValueAtTime(320, ctx.currentTime);
+        osc.frequency.exponentialRampToValueAtTime(160, ctx.currentTime + 0.3);
+        gain.gain.setValueAtTime(0.25, ctx.currentTime);
+        gain.gain.exponentialRampToValueAtTime(0.01, ctx.currentTime + 0.3);
+        osc.connect(gain);
+        gain.connect(ctx.destination);
+        osc.start(ctx.currentTime);
+        osc.stop(ctx.currentTime + 0.32);
+      } catch(e) {}
+    }
+
+    function playCorrectSound() {
+      if (!soundEnabled) return;
+      try {
+        const ctx = getAudioContext();
+        const notes = [523.25, 659.25, 783.99, 1046.50];
+        notes.forEach((freq, idx) => {
+          const osc = ctx.createOscillator();
+          const gain = ctx.createGain();
+          const t = ctx.currentTime + idx * 0.08;
+          osc.type = 'sine';
+          osc.frequency.setValueAtTime(freq, t);
+          gain.gain.setValueAtTime(0, t);
+          gain.gain.linearRampToValueAtTime(0.2, t + 0.03);
+          gain.gain.exponentialRampToValueAtTime(0.001, t + 0.45);
+          osc.connect(gain);
+          gain.connect(ctx.destination);
+          osc.start(t);
+          osc.stop(t + 0.46);
+        });
+      } catch(e) {}
+    }
+
+    function toggleSound() {
+      soundEnabled = !soundEnabled;
+      const icon = document.getElementById('soundIcon');
+      const btn = document.getElementById('soundToggleBtn');
+      if (soundEnabled) {
+        icon.setAttribute('data-lucide', 'volume-2');
+        btn.classList.replace('text-rose-600', 'text-indigo-700');
+        btn.classList.replace('bg-rose-50', 'bg-indigo-50');
+      } else {
+        icon.setAttribute('data-lucide', 'volume-x');
+        btn.classList.replace('text-indigo-700', 'text-rose-600');
+        btn.classList.replace('bg-indigo-50', 'bg-rose-50');
+      }
+      lucide.createIcons();
+    }
+
+    function renderQuestion(index) {
+      const q = quizData[index];
+      const state = userState[index];
+      const container = document.getElementById('quizSlideContainer');
+
+      let optionsHtml = '';
+      q.options.forEach(opt => {
+        const isWrong = state.wrongKeys.has(opt.key);
+        const isPassed = state.isCorrect && q.correct === opt.key;
+
+        let cardStyle = "bg-white/95 hover:bg-pink-50/80 border-purple-200 text-indigo-950";
+        let badgeStyle = "bg-purple-100 text-purple-700 border-purple-200";
+        let statusBadge = "";
+
+        if (isPassed) {
+          cardStyle = "bg-emerald-50 border-emerald-400 ring-2 ring-emerald-300 text-emerald-950 shadow-md";
+          badgeStyle = "bg-emerald-500 text-white border-emerald-500";
+          statusBadge = `<span class="inline-flex items-center gap-1 text-xs font-black text-emerald-700 bg-emerald-100 px-3 py-1 rounded-full border border-emerald-300">
+            ✨ Chính xác!
+          </span>`;
+        } else if (isWrong) {
+          cardStyle = "bg-rose-50 border-rose-300 text-rose-900 opacity-90";
+          badgeStyle = "bg-rose-300 text-rose-900 border-rose-300";
+          statusBadge = `<span class="inline-flex items-center gap-1 text-xs font-bold text-rose-600 bg-rose-100 px-3 py-1 rounded-full border border-rose-200">
+            🥺 Sai rồi, thử lại nha!
+          </span>`;
+        }
+
+        optionsHtml += `
+          <button 
+            id="opt-btn-${opt.key}"
+            onclick="handleSelectOption('${opt.key}', ${index})"
+            ${state.isCorrect ? 'disabled' : ''}
+            class="group w-full text-left p-4 md:p-5 rounded-3xl border-2 transition-all duration-200 active:scale-[0.99] flex items-start gap-3.5 shadow-sm ${cardStyle}"
+          >
+            <span class="w-8 h-8 md:w-9 md:h-9 rounded-2xl flex items-center justify-center font-black text-base shrink-0 border ${badgeStyle} group-hover:scale-105 transition">
+              ${opt.key}
+            </span>
+            <div class="flex-1 pt-0.5">
+              <p class="text-sm md:text-base font-bold leading-relaxed">${opt.text}</p>
+              ${statusBadge ? `<div class="mt-2">${statusBadge}</div>` : ''}
+            </div>
+          </button>
+        `;
+      });
+
+      let explainHtml = '';
+      if (state.isCorrect) {
+        explainHtml = `
+          <div class="mt-5 p-5 bg-gradient-to-r from-emerald-50 to-teal-50 rounded-3xl border border-emerald-200 shadow-sm">
+            <div class="flex items-center gap-2 text-emerald-800 font-extrabold text-sm md:text-base mb-1">
+              <i data-lucide="check-circle" class="w-5 h-5 text-emerald-600"></i>
+              <span>Đáp án đúng: Phương án ${q.correct}</span>
+            </div>
+            <p class="text-xs md:text-sm font-semibold text-emerald-900 leading-relaxed pl-7">
+              💡 <b>Căn cứ ghi nhớ:</b> ${q.explain}
+            </p>
+          </div>
+        `;
+      }
+
+      container.innerHTML = `
+        <div class="w-full bg-white/90 backdrop-blur-md rounded-3xl p-5 md:p-8 shadow-xl border border-pink-200">
+          <div class="flex items-center justify-between mb-4">
+            <span class="inline-flex items-center gap-1.5 px-3.5 py-1 rounded-full bg-purple-100 text-purple-700 font-black text-xs md:text-sm border border-purple-200">
+              <i data-lucide="help-circle" class="w-4 h-4"></i>
+              Câu hỏi ${q.id} / 12
+            </span>
+            <span class="text-xs font-bold text-purple-400">Chọn 1 phương án đúng</span>
+          </div>
+
+          <h2 class="text-lg md:text-2xl font-black text-purple-950 mb-6 leading-snug tracking-tight">
+            ${q.question}
+          </h2>
+
+          <div class="flex flex-col gap-3">
+            ${optionsHtml}
+          </div>
+
+          ${explainHtml}
+        </div>
+      `;
+
+      lucide.createIcons();
+    }
+
+    function handleSelectOption(key, qIndex) {
+      const q = quizData[qIndex];
+      const state = userState[qIndex];
+
+      if (state.isCorrect) return;
+
+      if (key === q.correct) {
+        state.isCorrect = true;
+        state.status = 'passed';
+        playCorrectSound();
+
+        confetti({
+          particleCount: 50,
+          spread: 70,
+          origin: { y: 0.65 },
+          colors: ['#f472b6', '#a855f7', '#38bdf8', '#34d399']
+        });
+
+        const allDone = userState.every(s => s.isCorrect);
+        if (allDone) {
+          setTimeout(() => {
+            confetti({ particleCount: 120, spread: 100, origin: { y: 0.4 } });
+            toggleCongratsModal(true);
+          }, 800);
+        }
+      } else {
+        state.wrongKeys.add(key);
+        state.status = 'trying';
+        playWrongSound();
+
+        const btn = document.getElementById(`opt-btn-${key}`);
+        if (btn) {
+          btn.classList.add('shake-anim');
+          setTimeout(() => btn.classList.remove('shake-anim'), 400);
+        }
+      }
+
+      renderQuestion(qIndex);
+      updateHeader();
+    }
+
+    function goToSlide(slideIndex) {
+      currentSlide = slideIndex;
+      const slide0 = document.getElementById('slide-0');
+      const quizContainer = document.getElementById('quizSlideContainer');
+      const bottomBar = document.getElementById('bottomBar');
+      const progressIndicator = document.getElementById('progressIndicator');
+
+      if (slideIndex === 0) {
+        slide0.classList.remove('hidden');
+        quizContainer.classList.add('hidden');
+        bottomBar.classList.add('hidden');
+        progressIndicator.classList.add('hidden');
+        progressIndicator.classList.remove('flex');
+      } else {
+        slide0.classList.add('hidden');
+        quizContainer.classList.remove('hidden');
+        bottomBar.classList.remove('hidden');
+        progressIndicator.classList.remove('hidden');
+        progressIndicator.classList.add('flex');
+        renderQuestion(slideIndex - 1);
+      }
+
+      updateHeader();
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+
+    function prevQuestion() {
+      if (currentSlide > 1) goToSlide(currentSlide - 1);
+      else goToSlide(0);
+    }
+
+    function nextQuestion() {
+      if (currentSlide < 12) {
+        goToSlide(currentSlide + 1);
+      } else {
+        const allDone = userState.every(s => s.isCorrect);
+        if (allDone) toggleCongratsModal(true);
+        else {
+          const firstUnpassed = userState.findIndex(s => !s.isCorrect);
+          if (firstUnpassed !== -1) goToSlide(firstUnpassed + 1);
+        }
+      }
+    }
+
+    function updateHeader() {
+      if (currentSlide === 0) return;
+      document.getElementById('progressText').innerText = `Câu ${currentSlide}/12`;
+      document.getElementById('progressBar').style.width = `${Math.round((currentSlide / 12) * 100)}%`;
+      document.getElementById('nextBtnText').innerText = currentSlide === 12 ? "Xem kết quả" : "Câu tiếp theo";
+    }
+
+    function resetAllQuiz() {
+      userState.forEach(s => {
+        s.status = 'unattempted';
+        s.wrongKeys.clear();
+        s.isCorrect = false;
+      });
+      toggleCongratsModal(false);
+      toggleGridModal(false);
+      goToSlide(1);
+    }
+
+    function toggleGridModal(forceState) {
+      const modal = document.getElementById('gridModal');
+      const isShow = forceState !== undefined ? forceState : modal.classList.contains('hidden');
+      if (isShow) {
+        renderGridButtons();
+        modal.classList.remove('hidden');
+      } else {
+        modal.classList.add('hidden');
+      }
+    }
+
+    function renderGridButtons() {
+      const grid = document.getElementById('gridButtons');
+      grid.innerHTML = quizData.map((q, idx) => {
+        const state = userState[idx];
+        let colorClass = "bg-purple-50 text-purple-800 border-purple-200 hover:bg-purple-100";
+        let icon = `${q.id}`;
+
+        if (state.isCorrect) {
+          colorClass = "bg-emerald-400 text-white border-emerald-500 font-black shadow-xs";
+          icon = `✓ ${q.id}`;
+        } else if (state.status === 'trying') {
+          colorClass = "bg-rose-100 text-rose-800 border-rose-300 font-bold";
+          icon = `✎ ${q.id}`;
+        }
+
+        if (currentSlide === q.id) {
+          colorClass += " ring-2 ring-purple-600 ring-offset-2";
+        }
+
+        return `
+          <button 
+            onclick="goToSlide(${q.id}); toggleGridModal(false)"
+            class="h-12 rounded-2xl border-2 flex items-center justify-center font-extrabold text-sm transition active:scale-90 ${colorClass}"
+          >
+            ${icon}
+          </button>
+        `;
+      }).join('');
+    }
+
+    function toggleCongratsModal(show) {
+      const modal = document.getElementById('congratsModal');
+      if (show) modal.classList.remove('hidden');
+      else modal.classList.add('hidden');
+    }
+
+    window.addEventListener('keydown', (e) => {
+      if (e.key === 'ArrowRight') nextQuestion();
+      if (e.key === 'ArrowLeft') prevQuestion();
+      if (currentSlide >= 1 && currentSlide <= 12) {
+        const key = e.key.toUpperCase();
+        if (['A', 'B', 'C', 'D', 'E'].includes(key)) {
+          const q = quizData[currentSlide - 1];
+          if (q.options.some(opt => opt.key === key)) {
+            handleSelectOption(key, currentSlide - 1);
+          }
+        }
+      }
+    });
+
+    lucide.createIcons();
+  </script>
+</body>
+</html>
